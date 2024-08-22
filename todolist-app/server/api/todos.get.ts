@@ -2,10 +2,9 @@ import { Todo } from "../models/Todo";
 
 export default defineEventHandler(async (event) => {
   const { query } = event.context;
-  const { search, group, priority } = query as {
-    search?: string;
-    group?: string;
-    priority?: Number;
+  const { search, group } = query as {
+    search: string;
+    group: string;
   };
 
   let options: any = {};
@@ -14,15 +13,11 @@ export default defineEventHandler(async (event) => {
     options.name = { $regex: search, $options: "i" };
   }
 
-  if (priority) {
-    options.priority = priority;
-  }
-
   if (group) {
     options.group = group;
   }
   try {
-    const todos = await Todo.find();
+    const todos = await Todo.find(options);
     event.node.res.statusCode = 200;
     return {
       statusMessage: "success",

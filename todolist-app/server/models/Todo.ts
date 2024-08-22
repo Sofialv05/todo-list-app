@@ -6,7 +6,6 @@ const todoSchema = new mongoose.Schema({
   dueDate: { type: Date },
   priority: { type: Number, default: 0 },
   completed: { type: Boolean, default: false },
-  group: { type: String, default: "none" },
   createdAt: { type: Date, default: new Date() },
   updatedAt: { type: Date, default: new Date() },
 });

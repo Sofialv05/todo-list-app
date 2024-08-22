@@ -2,6 +2,7 @@ import { Todo } from "../models/Todo";
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
+  const { name, content, dueDate, priority } = body;
   try {
     if (!body.name) {
       return {
@@ -9,10 +10,13 @@ export default defineEventHandler(async (event) => {
         statusMessage: "Todo name is required.",
       };
     }
-    await Todo.create({ name: body.name });
-    event.node.res.statusCode = 201;
+    await Todo.findByIdAndUpdate(
+      { _id: event.context.params!.id },
+      { name, content, dueDate: new Date(dueDate), priority },
+    );
+    event.node.res.statusCode = 200;
     return {
-      statusMessage: "Success add new todo",
+      statusMessage: "Success update todo",
     };
   } catch (error) {
     event.node.res.statusCode = 500;
