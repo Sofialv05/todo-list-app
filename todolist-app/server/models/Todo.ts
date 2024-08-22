@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
+import { ITodo } from "~/types";
 
-const todoSchema = new mongoose.Schema({
+const todoSchema = new mongoose.Schema<ITodo>({
   name: { type: String, required: true },
   content: { type: String },
   dueDate: { type: Date },
@@ -10,4 +11,4 @@ const todoSchema = new mongoose.Schema({
   updatedAt: { type: Date, default: new Date() },
 });
 
-export const Todo = mongoose.model("Todo", todoSchema);
+export const Todo = mongoose.model<ITodo>("Todo", todoSchema);

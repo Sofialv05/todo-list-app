@@ -1,8 +1,9 @@
+import { Groups } from "~/types";
 import { Group } from "../models/Group";
 
 export default defineEventHandler(async (event) => {
   try {
-    const groups = await Group.aggregate([
+    const groups = await Group.aggregate<Groups>([
       {
         $lookup: {
           from: "todos",

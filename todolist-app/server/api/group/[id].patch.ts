@@ -1,7 +1,8 @@
+import { Types } from "mongoose";
 import { Group } from "~/server/models/Group";
 
 export default defineEventHandler(async (event) => {
-  const body = await readBody(event);
+  const body: { id: Types.ObjectId } = await readBody(event);
   const groupId = event.context.params!.id;
   try {
     if (!groupId) {

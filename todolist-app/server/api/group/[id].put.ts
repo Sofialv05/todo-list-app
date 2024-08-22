@@ -1,7 +1,7 @@
 import { Group } from "~/server/models/Group";
 
 export default defineEventHandler(async (event) => {
-  const body = await readBody(event);
+  const body: { name: string } = await readBody(event);
   const id = event.context.params!.id;
   try {
     if (!body.name) {
