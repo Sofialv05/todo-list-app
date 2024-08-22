@@ -1,11 +1,8 @@
 import { Todo } from "../models/Todo";
 
 export default defineEventHandler(async (event) => {
-  const { query } = event.context;
-  const { search, group } = query as {
-    search: string;
-    group: string;
-  };
+  const query = getQuery(event);
+  const search = query.search as string | undefined;
 
   let options: any = {};
 
@@ -13,9 +10,6 @@ export default defineEventHandler(async (event) => {
     options.name = { $regex: search, $options: "i" };
   }
 
-  if (group) {
-    options.group = group;
-  }
   try {
     const todos = await Todo.find(options);
     event.node.res.statusCode = 200;

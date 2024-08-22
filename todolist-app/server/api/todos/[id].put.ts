@@ -1,22 +1,22 @@
-import { Todo } from "../models/Todo";
+import { Todo } from "~/server/models/Todo";
 
 export default defineEventHandler(async (event) => {
-  const id = event.context.params!.id;
+  const body = await readBody(event);
+  const { name, content, dueDate, priority } = body;
   try {
-    const todo = await Todo.findById({ _id: id });
-    if (!todo) {
+    if (!body.name) {
       return {
-        statusCode: 404,
-        statusMessage: "Todo not found.",
+        statusCode: 400,
+        statusMessage: "Todo name is required.",
       };
     }
     await Todo.findByIdAndUpdate(
       { _id: event.context.params!.id },
-      { completed: !todo.completed },
+      { name, content, dueDate: new Date(dueDate), priority },
     );
     event.node.res.statusCode = 200;
     return {
-      statusMessage: "Success update todo completed status",
+      statusMessage: "Success update todo",
     };
   } catch (error) {
     event.node.res.statusCode = 500;
