@@ -10,13 +10,14 @@ export default defineEventHandler(async (event) => {
       };
     }
 
-    await Group.create({ name });
+    await Group.create({ name: body.name });
 
     event.node.res.statusCode = 201;
     return {
       statusMessage: "Success create new group",
     };
   } catch (error) {
+    console.log(error);
     event.node.res.statusCode = 500;
     return {
       statusMessage: "Something went wrong.",

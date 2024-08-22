@@ -2,7 +2,6 @@ import { Todo } from "~/server/models/Todo";
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
-  const { name, content, dueDate, priority } = body;
   try {
     if (!body.name) {
       return {
@@ -12,7 +11,12 @@ export default defineEventHandler(async (event) => {
     }
     await Todo.findByIdAndUpdate(
       { _id: event.context.params!.id },
-      { name, content, dueDate: new Date(dueDate), priority },
+      {
+        name: body.name,
+        content: body.content,
+        dueDate: new Date(body.dueDate),
+        priority: body.priority,
+      },
     );
     event.node.res.statusCode = 200;
     return {

@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
         statusMessage: "Group name is required.",
       };
     }
-    await Group.findByIdAndUpdate({ _id: id }, { name });
+    await Group.findByIdAndUpdate({ _id: id }, { name: body.name });
     event.node.res.statusCode = 200;
     return {
       statusMessage: "Success update group",
