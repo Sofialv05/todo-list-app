@@ -1,21 +1,21 @@
 <template>
-  <form class="flex items-center max-w-sm mx-auto">
+  <form class="mx-auto flex max-w-sm items-center">
     <label for="simple-search" class="sr-only">Search</label>
     <div class="relative w-full">
       <input
         type="text"
         id="simple-search"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
         placeholder="Search a task"
         required
       />
     </div>
     <button
       type="submit"
-      class="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      class="ms-2 rounded-lg border border-blue-700 bg-blue-700 p-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
     >
       <svg
-        class="w-4 h-4"
+        class="h-4 w-4"
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

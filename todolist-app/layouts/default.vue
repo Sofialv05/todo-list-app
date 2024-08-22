@@ -1,7 +1,7 @@
 <template>
   <div class="flex h-screen flex-row">
     <SideBar />
-    <div class="flex flex-col">
+    <div class="flex w-full flex-col">
       <Navbar />
       <div class="mx-auto">
         <slot />
