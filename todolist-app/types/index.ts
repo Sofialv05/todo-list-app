@@ -21,3 +21,7 @@ export interface IGroup extends Base {
 export interface Groups extends Base {
   todos: ITodo[];
 }
+
+export interface APIResponse {
+  statusMessage: string;
+}
