@@ -13,6 +13,7 @@ export const useTodosStore = defineStore("todos", {
         const response = await $fetch<APIResponseWithData>("/api/todos");
 
         this.todos = response.data;
+        console.log(this.todos);
       } catch (error) {
         console.error(error);
       }

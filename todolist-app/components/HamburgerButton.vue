@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useSideBarStore } from "@/stores/sidebar";
+import { useGlobalStore } from "@/stores/global";
 
-const sideBarStore = useSideBarStore();
+const globalStore = useGlobalStore();
 function handleToggleSideBar() {
-  sideBarStore.toggleSideBar();
+  globalStore.toggleSideBar();
 }
 </script>
 
@@ -22,21 +22,21 @@ function handleToggleSideBar() {
               aria-hidden="true"
               class="absolute block h-0.5 w-5 transform bg-current transition duration-500 ease-in-out"
               :class="{
-                'rotate-45': sideBarStore.isDisplay,
-                '-translate-y-1.5': !sideBarStore.isDisplay,
+                'rotate-45': globalStore.isDisplay,
+                '-translate-y-1.5': !globalStore.isDisplay,
               }"
             ></span>
             <span
               aria-hidden="true"
               class="absolute block h-0.5 w-5 transform bg-current transition duration-500 ease-in-out"
-              :class="{ 'opacity-0': sideBarStore.isDisplay }"
+              :class="{ 'opacity-0': globalStore.isDisplay }"
             ></span>
             <span
               aria-hidden="true"
               class="absolute block h-0.5 w-5 transform bg-current transition duration-500 ease-in-out"
               :class="{
-                '-rotate-45': sideBarStore.isDisplay,
-                'translate-y-1.5': !sideBarStore.isDisplay,
+                '-rotate-45': globalStore.isDisplay,
+                'translate-y-1.5': !globalStore.isDisplay,
               }"
             ></span>
           </div>
