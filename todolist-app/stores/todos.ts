@@ -13,9 +13,10 @@ export const useTodosStore = defineStore("todos", {
         const response = await $fetch<APIResponseWithData>("/api/todos");
 
         this.todos = response.data;
-        console.log(this.todos);
+        return response.statusMessage;
       } catch (error) {
         console.error(error);
+        return "Failed to fetch data";
       }
     },
     async addTodo(todoName: string) {
@@ -41,7 +42,7 @@ export const useTodosStore = defineStore("todos", {
       try {
         const response = await $fetch<APIResponse>(`/api/todos/${todoId}`, {
           method: "PUT",
-          body: JSON.stringify({ updatedTodo }),
+          body: JSON.stringify(updatedTodo),
         });
         console.log(response);
       } catch (error) {
@@ -54,8 +55,10 @@ export const useTodosStore = defineStore("todos", {
           method: "PATCH",
         });
         console.log(response);
+        return response;
       } catch (error) {
         console.error(error);
+        return [];
       }
     },
     async deleteTodo(todoId: string) {

@@ -3,7 +3,7 @@ import { useTodosStore } from "@/stores/todos";
 const todos = useTodosStore();
 
 const newTodo = ref("");
-const { pending, error, refresh } = await useAsyncData("todos", () =>
+const { pending, error, refresh, data } = await useAsyncData("todos", () =>
   todos.getTodos(),
 );
 
@@ -20,9 +20,11 @@ const addTodo = async () => {
 };
 </script>
 <template>
-  <div class="">
+  <div v-if="pending">Loading...</div>
+  <div v-if="error">Error: {{ error.message }}</div>
+  <div v-else>
     <div
-      class="mx-auto mt-16 max-h-fit max-w-4xl overflow-hidden rounded-lg bg-white shadow-lg"
+      class="mx-auto my-14 max-w-4xl overflow-hidden rounded-lg bg-white shadow-lg"
     >
       <div class="px-4 py-2">
         <h1 class="text-center text-2xl font-bold uppercase text-gray-800">
@@ -45,7 +47,9 @@ const addTodo = async () => {
           </button>
         </div>
       </form>
-      <ul class="divide-y divide-gray-200 overflow-auto px-4">
+      <ul
+        class="m-8 max-h-[50vh] divide-y divide-gray-200 overflow-y-auto px-4"
+      >
         <li v-for="todo of todos.todos" :key="todo.id" class="py-2">
           <div class="flex items-center">
             <Task :todo="todo" />
