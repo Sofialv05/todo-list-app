@@ -59,9 +59,7 @@ const handleSubmitEdit = async () => {
     isEditingContent.value = false;
     isEditingDate.value = false;
 
-    if (response) {
-      await props.refresh();
-    }
+    await props.refresh();
   } catch (error) {
     console.error("Error updating todo:", error);
   }
