@@ -10,9 +10,12 @@ export const useTodosStore = defineStore("todos", {
   actions: {
     async getTodos() {
       try {
-        const response = await $fetch<APIResponseWithData>("/api/todos");
+        const response = await $fetch<APIResponseWithData>(
+          "/api/todos?today=true",
+        );
 
         this.todos = response.data;
+        // console.log(response);
         return response.statusMessage;
       } catch (error) {
         console.error(error);
@@ -43,8 +46,12 @@ export const useTodosStore = defineStore("todos", {
         const response = await $fetch<APIResponse>(`/api/todos/${todoId}`, {
           method: "PUT",
           body: JSON.stringify(updatedTodo),
+          headers: {
+            "Content-Type": "application/json",
+          },
         });
-        console.log(response);
+        console.log(response.statusMessage);
+        return response.statusMessage;
       } catch (error) {
         console.error(error);
       }

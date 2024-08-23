@@ -52,7 +52,7 @@ const addTodo = async () => {
       >
         <li v-for="todo of todos.todos" :key="todo.id" class="py-2">
           <div class="flex items-center">
-            <Task :todo="todo" />
+            <Task :todo="todo" :refresh="refresh" />
           </div>
         </li>
       </ul>

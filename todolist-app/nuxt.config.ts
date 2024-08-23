@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     MONGODB_URI: process.env.MONGODB_URI,
   },
-  css: ["~/assets/css/main.css"],
+  css: ["~/assets/css/main.css", "primeicons/primeicons.css"],
   postcss: {
     plugins: {
       tailwindcss: {},
