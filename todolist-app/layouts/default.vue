@@ -1,9 +1,9 @@
 <template>
   <div class="flex h-screen flex-row">
     <SideBar />
-    <div class="flex w-full flex-col">
+    <div class="flex flex-1 flex-col overflow-y-auto">
       <Navbar />
-      <div class="mx-auto">
+      <div class="p-4">
         <slot />
       </div>
     </div>

@@ -1,19 +1,29 @@
 <script setup lang="ts">
-import { useTodosStore } from "@/stores/todos";
-const todos = useTodosStore();
-await callOnce(todos.getTodos);
-
-const newTodo = "";
-
-const addTodo = async () => {
-  await todos.addTodo(newTodo);
-};
+definePageMeta({
+  layout: "custom",
+});
 </script>
 <template>
-  <div class="h-screen w-screen overflow-hidden">
-    <div><h1>Add Task</h1></div>
-    <div class="mx-auto h-full w-full rounded-xl bg-gray-400 p-20">
-      <Task />
+  <main class="relative mx-auto">
+    <div class="w-full translate-y-[70%] transform text-[15px] text-black">
+      <div class="z-10 mx-auto mt-16 max-w-4xl text-center">
+        <h1 class="mb-6 text-4xl font-extrabold md:text-6xl md:!leading-[75px]">
+          Build Landing Pages with Typeform Integration
+        </h1>
+        <p class="text-base">
+          Embark on a gastronomic journey with our curated dishes, delivered
+          promptly to your doorstep. Elevate your dining experience today. Lorem
+          ipsum dolor sit amet, consectetur adipiscing elit.
+        </p>
+        <div class="mt-10">
+          <NuxtLink
+            to="/add-task"
+            class="rounded-xl bg-cyan-900 px-6 py-3 text-white transition-all hover:bg-cyan-800"
+          >
+            Get started
+          </NuxtLink>
+        </div>
+      </div>
     </div>
-  </div>
+  </main>
 </template>
