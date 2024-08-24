@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const todos = await Todo.find(options);
+    const todos = await Todo.find(options).sort({ createdAt: -1, _id: -1 });
     event.node.res.statusCode = 200;
     return {
       statusMessage: "success",

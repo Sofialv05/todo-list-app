@@ -1,16 +1,24 @@
 <script setup lang="ts">
+import { ref, onMounted } from "vue";
 import { useTodosStore } from "@/stores/todos";
-const todos = useTodosStore();
+const todoStore = useTodosStore();
 
 const newTodo = ref("");
 const { pending, error, refresh, data } = await useAsyncData("todos", () =>
-  todos.getTodos(),
+  todoStore.getTodos(),
 );
+// onMounted(() => {
+//   todoStore.getTodos();
+// });
+
+// onBeforeMount(() => {
+//   todoStore.getTodos();
+// });
 
 const addTodo = async () => {
   if (newTodo.value.trim()) {
     try {
-      await todos.addTodo(newTodo.value);
+      await todoStore.addTodo(newTodo.value);
       newTodo.value = "";
       await refresh();
     } catch (error) {
@@ -50,7 +58,7 @@ const addTodo = async () => {
       <ul
         class="m-8 max-h-[50vh] divide-y divide-gray-200 overflow-y-auto px-4"
       >
-        <li v-for="todo of todos.todos" :key="todo.id" class="py-2">
+        <li v-for="todo of todoStore.todos" :key="todo.id" class="py-2">
           <div class="flex items-center">
             <Task :todo="todo" :refresh="refresh" />
           </div>

@@ -2,7 +2,7 @@
 import { useGlobalStore } from "~/stores/global";
 import { useTodosStore } from "~/stores/todos";
 import type { ITodo } from "~/types";
-import { ref, toRefs } from "vue";
+import { ref, toRefs, onMounted } from "vue";
 
 // props
 const props = defineProps<{
@@ -26,6 +26,9 @@ const todoRef = ref({
 const globalStore = useGlobalStore();
 const todoStore = useTodosStore();
 
+// onMounted(() => {
+//   todoStore.getTodos();
+// });
 // Toggle edit mode
 const toggleEditName = () => {
   isEditingName.value = true;
@@ -60,6 +63,7 @@ const handleSubmitEdit = async () => {
     isEditingDate.value = false;
 
     await props.refresh();
+    // await todoStore.getTodos();
   } catch (error) {
     console.error("Error updating todo:", error);
   }
@@ -69,6 +73,7 @@ const handleSubmitEdit = async () => {
 const handleDelete = async () => {
   await todoStore.deleteTodo(props.todo._id);
   await props.refresh();
+  // await todoStore.getTodos();
 };
 </script>
 
@@ -88,7 +93,7 @@ const handleDelete = async () => {
           />
         </label>
         <span v-if="!isEditingName" @dblclick="toggleEditName" class="text-md">
-          {{ todoRef.name }}
+          {{ props.todo.name }}
         </span>
         <input
           v-else

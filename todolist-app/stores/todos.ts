@@ -15,7 +15,7 @@ export const useTodosStore = defineStore("todos", {
         );
 
         this.todos = response.data;
-        // console.log(response);
+        console.log(response);
         return response.statusMessage;
       } catch (error) {
         console.error(error);
@@ -29,6 +29,7 @@ export const useTodosStore = defineStore("todos", {
           body: JSON.stringify({ name: todoName }),
         });
         console.log(response);
+        // await this.getTodos();
       } catch (error) {
         console.error(error);
       }
@@ -62,6 +63,7 @@ export const useTodosStore = defineStore("todos", {
           method: "PATCH",
         });
         console.log(response);
+        await this.getTodos();
         return response;
       } catch (error) {
         console.error(error);
@@ -74,6 +76,7 @@ export const useTodosStore = defineStore("todos", {
           method: "DELETE",
         });
         console.log(response);
+        await this.getTodos();
       } catch (error) {
         console.error(error);
       }
