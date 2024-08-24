@@ -21,8 +21,8 @@ const lists = [
   },
   {
     id: 4,
-    name: "Planned",
-    href: "/",
+    name: "All Tasks",
+    href: "/all-tasks",
   },
 ];
 </script>
