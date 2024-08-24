@@ -33,7 +33,7 @@ const lists = [
       display: globalStore.isDisplay,
       hidden: !globalStore.isDisplay,
     }"
-    class="left-0 top-0 min-h-screen min-w-[250px] transform overflow-auto bg-[#fcfcfc] px-4 py-6 font-[sans-serif] shadow-lg transition-all duration-500 peer-checked:translate-x-0"
+    class="left-0 top-0 z-10 min-h-screen min-w-[250px] transform overflow-auto bg-[#fcfcfc] px-4 py-6 font-[sans-serif] shadow-lg transition-all duration-500 peer-checked:translate-x-0"
   >
     <div class="flex flex-row justify-between">
       <a href="javascript:void(0)"

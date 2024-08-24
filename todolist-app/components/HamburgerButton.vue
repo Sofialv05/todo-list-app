@@ -8,7 +8,7 @@ function handleToggleSideBar() {
 </script>
 
 <template>
-  <label class="swap swap-rotate ml-4">
+  <label class="swap swap-rotate fixed ml-4">
     <!-- this hidden checkbox controls the state -->
     <input @click="handleToggleSideBar" type="checkbox" />
 

@@ -1,11 +1,11 @@
 <template>
   <div
-    class="flex h-16 items-center justify-between border-b border-gray-200 bg-white"
+    class="flex h-16 items-center justify-between border-b border-gray-200 bg-white py-4"
   >
     <HamburgerButton />
-    <div class="flex items-center px-4">
+    <div class="flex w-full items-center justify-center px-4">
       <input
-        class="mx-4 w-full rounded-md border px-4 py-2"
+        class="mx-4 w-auto rounded-md border px-4 py-2"
         type="text"
         placeholder="Search"
       />
