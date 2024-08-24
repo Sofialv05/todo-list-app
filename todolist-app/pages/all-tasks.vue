@@ -4,12 +4,22 @@ import { useTodosStore } from "@/stores/todos";
 
 const todoStore = useTodosStore();
 
+const allTodos = ref([]);
+const searchRef = ref("");
+
 const { pending, error, refresh, data } = await useAsyncData("todos", () =>
   todoStore.getTodos(),
 );
 onMounted(() => {
   todoStore.getTodos();
+  allTodos.value = todoStore.todos;
 });
+
+const handleSearch = async () => {
+  await todoStore.getTodos(false, searchRef.value);
+  allTodos.value = todoStore.todos;
+  console.log(allTodos.value);
+};
 </script>
 <template>
   <div v-if="pending">Loading...</div>
@@ -23,11 +33,42 @@ onMounted(() => {
           All Tasks
         </h1>
       </div>
-      <SearchBar />
+      <form
+        class="mx-auto mt-4 flex w-full flex-row items-center justify-center"
+        @submit.prevent="handleSearch"
+      >
+        <div class="mr-3 w-full">
+          <input
+            type="search"
+            v-model="searchRef"
+            id="simple-search"
+            class="input input-bordered w-full"
+            placeholder="Search task name"
+          />
+        </div>
+        <button type="submit" class="btn btn-md">
+          <svg
+            class="h-4 w-4"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 20 20"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+            />
+          </svg>
+          <span class="sr-only">Search</span>
+        </button>
+      </form>
       <ul
         class="m-8 max-h-[50vh] divide-y divide-gray-200 overflow-y-auto px-4"
       >
-        <li v-for="todo of todoStore.todos" :key="todo.id" class="py-4">
+        <li v-for="todo of allTodos" :key="todo.id" class="py-4">
           <div class="flex items-center">
             <Task :todo="todo" :refresh="refresh" />
           </div>
