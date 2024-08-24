@@ -8,7 +8,7 @@ const { pending, error, refresh, data } = await useAsyncData("todos", () =>
   todoStore.getTodos(true),
 );
 onMounted(() => {
-  todoStore.getTodos();
+  todoStore.getTodos(true);
 });
 
 // onBeforeMount(() => {

@@ -57,7 +57,9 @@ const handleDeleteGrop = async (id: string) => {
             <h2 class="card-title">{{ group.name }}</h2>
 
             <div class="card-actions flex justify-end">
-              <button class="btn btn-primary">see all tasks</button>
+              <RouterLink :to="`/groups/${group._id}`" class="btn btn-primary">
+                See all tasks
+              </RouterLink>
               <button class="btn btn-error">
                 <i
                   @click="handleDeleteGrop(group._id)"
