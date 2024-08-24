@@ -27,6 +27,19 @@ export const useTodosStore = defineStore("todos", {
         return "Failed to fetch data";
       }
     },
+    async getImportantTodos() {
+      try {
+        const response = await $fetch<APIResponseWithData>(
+          "/api/todos/important",
+        );
+        this.todos = response.data;
+        console.log(response);
+        return response.statusMessage;
+      } catch (error) {
+        console.error(error);
+        return "Failed to fetch data";
+      }
+    },
     async addTodo(todoName: string) {
       try {
         const response = await $fetch<APIResponse>("/api/todos", {

@@ -172,7 +172,7 @@ const flagPriority = computed(() => {
         v-model="todoRef.content"
         @blur="handleSubmitEdit"
         @keyup.enter="handleSubmitEdit"
-        rows="3"
+        rows="1"
       />
     </div>
   </div>

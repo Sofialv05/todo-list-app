@@ -7,9 +7,9 @@ const newTodo = ref("");
 const { pending, error, refresh, data } = await useAsyncData("todos", () =>
   todoStore.getTodos(true),
 );
-// onMounted(() => {
-//   todoStore.getTodos();
-// });
+onMounted(() => {
+  todoStore.getTodos();
+});
 
 // onBeforeMount(() => {
 //   todoStore.getTodos();
@@ -32,7 +32,7 @@ const addTodo = async () => {
   <div v-if="error">Error: {{ error.message }}</div>
   <div v-else>
     <div
-      class="z-1 m relative mx-auto my-14 max-w-4xl overflow-hidden rounded-lg bg-white shadow-lg"
+      class="z-1 mx-auto my-14 h-[600px] max-w-4xl overflow-hidden rounded-lg bg-white shadow-lg"
     >
       <div class="px-4 py-2">
         <h1 class="text-center text-2xl font-bold uppercase text-gray-800">
