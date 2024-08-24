@@ -10,7 +10,7 @@ interface Base {
 export interface ITodo extends Base {
   content: string;
   dueDate: Date;
-  priority: number;
+  priority: string;
   completed: boolean;
 }
 

@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 
 export const useGlobalStore = defineStore("global", {
   state: () => ({
-    isDisplay: true as boolean,
+    isDisplay: false as boolean,
   }),
   actions: {
     toggleSideBar() {

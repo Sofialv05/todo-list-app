@@ -6,7 +6,7 @@ const todoSchema = new mongoose.Schema<ITodo>(
     name: { type: String, required: true },
     content: { type: String, default: "" },
     dueDate: { type: Date, default: Date.now() },
-    priority: { type: Number, default: 0 },
+    priority: { type: String, default: "default" },
     completed: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date.now() },
     updatedAt: { type: Date, default: Date.now() },

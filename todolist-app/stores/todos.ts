@@ -8,11 +8,16 @@ export const useTodosStore = defineStore("todos", {
     todos: [] as ITodo[],
   }),
   actions: {
-    async getTodos() {
+    async getTodos(today = false, search = "") {
       try {
-        const response = await $fetch<APIResponseWithData>(
-          "/api/todos?today=true",
-        );
+        let baseUrl = "/api/todos";
+        if (today) {
+          baseUrl += "?today=true";
+        } else if (search) {
+          baseUrl += `?search=${search}`;
+        }
+
+        const response = await $fetch<APIResponseWithData>(baseUrl);
 
         this.todos = response.data;
         console.log(response);

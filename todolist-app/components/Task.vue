@@ -2,84 +2,63 @@
 import { useGlobalStore } from "~/stores/global";
 import { useTodosStore } from "~/stores/todos";
 import type { ITodo } from "~/types";
-import { ref, toRefs, onMounted } from "vue";
+import { ref, computed } from "vue";
 
-// props
 const props = defineProps<{
   todo: ITodo;
   refresh: () => Promise<void>;
 }>();
 
-// refs
+const isShowContent = ref(false);
 const isCompleted = ref(props.todo.completed);
-const isEditingName = ref(false);
-const isEditingContent = ref(false);
-const isEditingDate = ref(false);
-const todoRef = ref({
-  name: props.todo.name,
-  content: props.todo.content,
-  dueDate: props.todo.dueDate,
-  priority: props.todo.priority,
-});
+const editingField = ref<"name" | "content" | "date" | null>(null);
+const todoRef = ref({ ...props.todo });
 
-// stores
 const globalStore = useGlobalStore();
 const todoStore = useTodosStore();
 
-// onMounted(() => {
-//   todoStore.getTodos();
-// });
-// Toggle edit mode
-const toggleEditName = () => {
-  isEditingName.value = true;
-};
-const toggleEditContent = () => {
-  isEditingContent.value = true;
-};
-const toggleEditDate = () => {
-  isEditingDate.value = true;
+const toggleEdit = (field: "name" | "content" | "date") => {
+  editingField.value = editingField.value === field ? null : field;
 };
 
-// Toggle completed status
+const toggleShowContent = () => {
+  isShowContent.value = !isShowContent.value;
+};
+
 const toggleCheckbox = async () => {
   await todoStore.changeTodoStatus(props.todo._id);
   isCompleted.value = !isCompleted.value;
 };
 
-// Handle edit submission
 const handleSubmitEdit = async () => {
   try {
-    const updatedTodo = {
-      name: todoRef.value.name,
-      content: todoRef.value.content,
-      dueDate: todoRef.value.dueDate,
-      priority: todoRef.value.priority,
-    };
-
-    const response = await todoStore.updateTodo(updatedTodo, props.todo._id);
-
-    isEditingName.value = false;
-    isEditingContent.value = false;
-    isEditingDate.value = false;
-
+    await todoStore.updateTodo(todoRef.value, props.todo._id);
+    editingField.value = null;
     await props.refresh();
-    // await todoStore.getTodos();
   } catch (error) {
     console.error("Error updating todo:", error);
   }
 };
 
-//handle delete todo
 const handleDelete = async () => {
   await todoStore.deleteTodo(props.todo._id);
   await props.refresh();
-  // await todoStore.getTodos();
 };
+
+const colors = ["green", "yellow", "red"];
 </script>
 
 <template>
   <div class="flex w-full flex-col">
     <div class="flex w-full flex-row items-center justify-between">
+      <i
+        @click="toggleShowContent"
+        :class="{
+          'pi-angle-down': isShowContent,
+          'pi-angle-right': !isShowContent,
+        }"
+        class="pi hover:cursor-pointer"
+      ></i>
       <div
         :class="{ 'line-through': isCompleted }"
         class="flex flex-auto items-center"
@@ -92,20 +71,28 @@ const handleDelete = async () => {
             @change="toggleCheckbox"
           />
         </label>
-        <span v-if="!isEditingName" @dblclick="toggleEditName" class="text-md">
+        <span
+          v-if="editingField !== 'name'"
+          @dblclick="toggleEdit('name')"
+          class="text-md font-semibold"
+        >
           {{ props.todo.name }}
         </span>
         <input
           v-else
           type="text"
-          class="text-md w-full focus:outline-none"
+          class="text-md w-full font-semibold focus:outline-none"
           v-model="todoRef.name"
           @blur="handleSubmitEdit"
           @keyup.enter="handleSubmitEdit"
         />
       </div>
       <div class="flex flex-row items-center gap-3">
-        <p v-if="!isEditingDate" @dblclick="toggleEditDate" class="text-md">
+        <p
+          v-if="editingField !== 'date'"
+          @dblclick="toggleEdit('date')"
+          class="text-md"
+        >
           {{
             props.todo.dueDate ? globalStore.formatDate(props.todo.dueDate) : ""
           }}
@@ -115,27 +102,51 @@ const handleDelete = async () => {
           type="date"
           class="text-md w-32 focus:outline-none"
           v-model="todoRef.dueDate"
-          @blur="isEditingDate = false"
+          @blur="handleSubmitEdit"
           @keyup.enter="handleSubmitEdit"
         />
-        <i @click="handleDelete" class="pi pi-trash"></i>
+
+        <details class="dropdown dropdown-left relative">
+          <summary
+            tabindex="0"
+            @click=""
+            :class="['pi', 'pi-flag', 'hover:cursor-pointer']"
+          ></summary>
+
+          <div
+            tabindex="0"
+            class="menu dropdown-content absolute z-20 h-10 w-32 rounded-box bg-base-100 p-2 shadow"
+          >
+            <div class="flex flex-row justify-around py-2">
+              <a class="pi pi-flag hover:cursor-pointer" />
+              <a
+                v-for="color of colors"
+                class="pi pi-flag-fill hover:cursor-pointer"
+                :style="{ color: color }"
+              />
+            </div>
+          </div>
+        </details>
+        <i @click="handleDelete" class="pi pi-trash hover:cursor-pointer"></i>
       </div>
     </div>
-    <div>
-      <span
-        v-if="!isEditingContent"
-        @dblclick="toggleEditContent"
-        class="text-md"
+    <div v-if="isShowContent" class="w-full">
+      <p
+        v-if="editingField !== 'content'"
+        :class="{ 'text-gray-500': !props.todo.content }"
+        @dblclick="toggleEdit('content')"
+        class="ml-12 text-sm"
       >
-        {{ props.todo.content ? todo.content : "" }}
-      </span>
-      <input
+        {{ props.todo.content || "add content here" }}
+      </p>
+      <textarea
         v-else
         type="text"
-        class="text-md w-32 focus:outline-none"
+        class="ml-12 w-[90%] text-sm focus:outline-none"
         v-model="todoRef.content"
         @blur="handleSubmitEdit"
         @keyup.enter="handleSubmitEdit"
+        rows="3"
       />
     </div>
   </div>
