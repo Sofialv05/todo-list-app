@@ -34,7 +34,7 @@ export const useTodosStore = defineStore("todos", {
           body: JSON.stringify({ name: todoName }),
         });
         console.log(response);
-        // await this.getTodos();
+        await this.getTodos();
       } catch (error) {
         console.error(error);
       }
@@ -56,6 +56,7 @@ export const useTodosStore = defineStore("todos", {
             "Content-Type": "application/json",
           },
         });
+        await this.getTodos();
         console.log(response.statusMessage);
         return response.statusMessage;
       } catch (error) {

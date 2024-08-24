@@ -11,14 +11,14 @@ const props = defineProps<{
 
 const isShowContent = ref(false);
 const isCompleted = ref(props.todo.completed);
-const editingField = ref<"name" | "content" | "date" | null>(null);
+const editingField = ref<"name" | "content" | "date" | "">("");
 const todoRef = ref({ ...props.todo });
 
 const globalStore = useGlobalStore();
 const todoStore = useTodosStore();
 
 const toggleEdit = (field: "name" | "content" | "date") => {
-  editingField.value = editingField.value === field ? null : field;
+  editingField.value = editingField.value === field ? "" : field;
 };
 
 const toggleShowContent = () => {
@@ -33,7 +33,7 @@ const toggleCheckbox = async () => {
 const handleSubmitEdit = async () => {
   try {
     await todoStore.updateTodo(todoRef.value, props.todo._id);
-    editingField.value = null;
+    editingField.value = "";
     await props.refresh();
   } catch (error) {
     console.error("Error updating todo:", error);
@@ -45,7 +45,27 @@ const handleDelete = async () => {
   await props.refresh();
 };
 
-const colors = ["green", "yellow", "red"];
+const handlePriority = async (priority: string) => {
+  todoRef.value.priority = priority;
+  await todoStore.updateTodo(todoRef.value, props.todo._id);
+};
+
+const colors = [
+  { color: "red", priority: "high" },
+  { color: "yellow", priority: "medium" },
+  { color: "green", priority: "low" },
+];
+
+const flagPriority = computed(() => {
+  const flag = colors.find(
+    (color) => color.priority === todoRef.value.priority,
+  );
+  if (!flag) {
+    return { flag: "pi-flag", color: "black" };
+  } else {
+    return { flag: "pi-flag-fill", color: flag.color };
+  }
+});
 </script>
 
 <template>
@@ -106,26 +126,32 @@ const colors = ["green", "yellow", "red"];
           @keyup.enter="handleSubmitEdit"
         />
 
-        <details class="dropdown dropdown-left relative">
+        <details class="dropdown dropdown-left z-20">
           <summary
             tabindex="0"
             @click=""
-            :class="['pi', 'pi-flag', 'hover:cursor-pointer']"
+            :class="['pi', flagPriority.flag, 'hover:cursor-pointer']"
+            :style="{ color: flagPriority.color }"
           ></summary>
 
-          <div
-            tabindex="0"
-            class="menu dropdown-content absolute z-20 h-10 w-32 rounded-box bg-base-100 p-2 shadow"
+          <ul
+            class="menu dropdown-content menu-horizontal rounded-box bg-base-200"
           >
-            <div class="flex flex-row justify-around py-2">
-              <a class="pi pi-flag hover:cursor-pointer" />
-              <a
+            <div class="flex flex-row">
+              <li
+                @click="handlePriority(color.priority)"
                 v-for="color of colors"
-                class="pi pi-flag-fill hover:cursor-pointer"
-                :style="{ color: color }"
-              />
+              >
+                <a
+                  class="pi pi-flag-fill hover:cursor-pointer"
+                  :style="{ color: color.color }"
+                />
+              </li>
+              <li @click="handlePriority('default')">
+                <a class="pi pi-flag hover:cursor-pointer" />
+              </li>
             </div>
-          </div>
+          </ul>
         </details>
         <i @click="handleDelete" class="pi pi-trash hover:cursor-pointer"></i>
       </div>
