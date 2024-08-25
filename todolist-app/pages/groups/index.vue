@@ -62,7 +62,7 @@ const handleDeleteGrop = async (id: string) => {
               </RouterLink>
               <button class="btn btn-error">
                 <i
-                  @click="handleDeleteGrop(group._id)"
+                  @click="handleDeleteGrop(group._id.toString())"
                   class="pi pi-trash hover:cursor-pointer"
                 ></i>
               </button>

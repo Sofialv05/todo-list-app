@@ -23,7 +23,11 @@ const { pending, error, refresh, data } = await useAsyncData(
       <ul
         class="m-8 max-h-[50vh] divide-y divide-gray-200 overflow-y-auto px-4"
       >
-        <li v-for="todo of todoStore.todos" :key="todo.id" class="py-4">
+        <li
+          v-for="todo of todoStore.todos"
+          :key="todo._id.toString()"
+          class="py-4"
+        >
           <div class="flex items-center">
             <Task :todo="todo" :refresh="refresh" />
           </div>

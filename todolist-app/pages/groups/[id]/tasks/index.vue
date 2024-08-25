@@ -3,14 +3,15 @@ import { ref, onMounted, onBeforeMount } from "vue";
 import { useRoute } from "vue-router";
 import { useGroupStore } from "@/stores/group";
 import { useTodosStore } from "@/stores/todos";
+import type { IGroup, ITodo } from "~/types";
 
 const todoStore = useTodosStore();
 const groupStore = useGroupStore();
 const route = useRoute();
 const groupId = route.params.id as string;
 
-const groupTodos = ref([]);
-const filteredTodos = ref([]);
+const groupTodos = ref<ITodo[]>([]);
+const filteredTodos = ref<ITodo[]>([]);
 
 const { pending, error, refresh, data } = await useAsyncData("todos", () =>
   todoStore.getTodos(),
@@ -19,10 +20,11 @@ const { pending, error, refresh, data } = await useAsyncData("todos", () =>
 const mountedFn = async () => {
   await groupStore.getGroupTodos(groupId);
   groupTodos.value = groupStore.group.todos;
-  console.log(groupTodos.value);
+  // console.log(groupTodos.value);
   const filterTodos = todoStore.todos.filter((todo) => {
     return !groupTodos.value.some((groupTodo) => groupTodo._id === todo._id);
   });
+  // console.log(filterTodos);
 
   filteredTodos.value = filterTodos;
 };
@@ -54,14 +56,19 @@ const handleAddTodoToGroup = async (todoId: string) => {
       <ul
         class="m-8 max-h-[50vh] divide-y divide-gray-200 overflow-y-auto px-4"
       >
-        <div v-if="filteredTodos < 1">
+        <div v-if="filteredTodos.length < 1">
           <h1 class="text-center text-lg text-gray-800">No tasks available</h1>
         </div>
-        <li v-else v-for="todo of filteredTodos" :key="todo._id" class="py-4">
+        <li
+          v-else
+          v-for="todo of filteredTodos"
+          :key="todo._id.toString()"
+          class="py-4"
+        >
           <div class="flex flex-row items-center">
             <Task :todo="todo" :refresh="refresh" />
             <i
-              @click="handleAddTodoToGroup(todo._id)"
+              @click="handleAddTodoToGroup(todo._id.toString())"
               class="pi pi-plus-circle ml-4 hover:cursor-pointer"
             ></i>
           </div>

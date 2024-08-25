@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useTodosStore } from "@/stores/todos";
+import type { ITodo } from "~/types";
 
 const todoStore = useTodosStore();
 
-const allTodos = ref([]);
+const allTodos = ref<ITodo[]>([]);
 const searchRef = ref("");
 
 const { pending, error, refresh, data } = await useAsyncData("todos", () =>
@@ -68,7 +69,7 @@ const handleSearch = async () => {
       <ul
         class="m-8 max-h-[50vh] divide-y divide-gray-200 overflow-y-auto px-4"
       >
-        <li v-for="todo of allTodos" :key="todo.id" class="py-4">
+        <li v-for="todo of allTodos" :key="todo._id.toString()" class="py-4">
           <div class="flex items-center">
             <Task :todo="todo" :refresh="refresh" />
           </div>

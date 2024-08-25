@@ -1,14 +1,14 @@
-import type { APIResponse, IGroup } from "~/types";
+import type { APIResponse, Groups, IGroup } from "~/types";
 
-type APIResponseWithData = APIResponse & { data: IGroup[] };
+type APIResponseWithData = APIResponse & { data: Groups[] };
 
 export const useGroupStore = defineStore("group", {
   state: () => ({
-    groups: [] as IGroup[],
-    group: {} as IGroup,
+    groups: [] as Groups[],
+    group: {} as Groups,
   }),
   actions: {
-    setGroups(groups: IGroup[]) {
+    setGroups(groups: Groups[]) {
       this.groups = groups;
     },
     async getGroups() {
