@@ -9,33 +9,26 @@ const { pending, error, refresh, data } = await useAsyncData(
 </script>
 
 <template>
-  <div
-    class="z-1 mx-auto my-14 h-[600px] max-w-4xl overflow-hidden rounded-xl bg-white shadow-lg"
-  >
-    <div>
-      <div class="px-4 py-8">
-        <h1 class="text-sub2 text-center text-2xl font-bold">
-          Important Tasks
-        </h1>
+  <div class="p-4">
+    <h1 class="text-sub2 text-center text-2xl font-bold">Important Tasks</h1>
+  </div>
+
+  <div class="mt-4 flex flex-grow overflow-y-auto">
+    <ul class="m-8 w-full divide-y divide-gray-200 px-4">
+      <div v-if="pending" class="flex h-full w-full">
+        <Spinner />
       </div>
-      <ul
-        class="m-8 max-h-[50vh] divide-y divide-gray-200 overflow-y-auto px-4"
+      <div v-if="error">Error: {{ error.message }}</div>
+      <li
+        v-else
+        v-for="todo of todoStore.todos"
+        :key="todo._id.toString()"
+        class="py-4"
       >
-        <div v-if="pending" class="flex h-full w-full">
-          <Spinner />
+        <div class="flex items-center">
+          <Task :todo="todo" :refresh="refresh" />
         </div>
-        <div v-if="error">Error: {{ error.message }}</div>
-        <li
-          v-else
-          v-for="todo of todoStore.todos"
-          :key="todo._id.toString()"
-          class="py-4"
-        >
-          <div class="flex items-center">
-            <Task :todo="todo" :refresh="refresh" />
-          </div>
-        </li>
-      </ul>
-    </div>
+      </li>
+    </ul>
   </div>
 </template>
