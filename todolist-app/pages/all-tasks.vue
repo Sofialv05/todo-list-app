@@ -24,9 +24,7 @@ const handleSearch = async () => {
 </script>
 <template>
   <div class="p-4">
-    <h1 class="text-center text-2xl font-bold uppercase text-gray-800">
-      All Tasks
-    </h1>
+    <h1 class="text-sub2 text-center text-2xl font-bold">All Task</h1>
   </div>
   <form
     class="mx-40 mt-4 flex flex-row items-center justify-center"

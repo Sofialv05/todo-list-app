@@ -41,39 +41,37 @@ const handleAddTodoToGroup = async (todoId: string) => {
 </script>
 
 <template>
-  <div>
-    <div
-      class="z-1 mx-auto my-14 h-[600px] max-w-4xl overflow-hidden rounded-lg bg-white shadow-lg"
+  <div class="relative flex flex-row items-center p-4">
+    <RouterLink
+      :to="`/groups/${groupId}`"
+      class="hover:bg-sub y absolute left-4 flex-shrink-0 rounded bg-primary px-4 py-2 text-sm text-gray-700 hover:text-white"
     >
-      <div class="px-4 py-2">
-        <h1 class="text-center text-2xl font-bold uppercase text-gray-800">
-          Add task to {{ groupStore.group.name }}
-        </h1>
-        <RouterLink :to="`/groups/${groupId}`" class="btn">
-          Back to {{ groupStore.group.name }}</RouterLink
-        >
+      <i class="pi pi-angle-left"></i>
+      Back to {{ groupStore.group.name }}
+    </RouterLink>
+    <h1 class="text-sub2 flex-grow text-center text-2xl font-bold">
+      Add task to {{ groupStore.group.name }}
+    </h1>
+  </div>
+  <div class="mt-4 flex flex-grow overflow-y-auto">
+    <ul class="m-8 w-full divide-y divide-gray-200 px-4">
+      <div v-if="filteredTodos.length < 1">
+        <h1 class="text-center text-lg text-gray-800">No tasks available</h1>
       </div>
-      <ul
-        class="m-8 max-h-[50vh] divide-y divide-gray-200 overflow-y-auto px-4"
+      <li
+        v-else
+        v-for="todo of filteredTodos"
+        :key="todo._id.toString()"
+        class="py-4"
       >
-        <div v-if="filteredTodos.length < 1">
-          <h1 class="text-center text-lg text-gray-800">No tasks available</h1>
+        <div class="flex flex-row items-center">
+          <Task :todo="todo" :refresh="refresh" />
+          <i
+            @click="handleAddTodoToGroup(todo._id.toString())"
+            class="pi pi-plus-circle ml-4 hover:cursor-pointer"
+          ></i>
         </div>
-        <li
-          v-else
-          v-for="todo of filteredTodos"
-          :key="todo._id.toString()"
-          class="py-4"
-        >
-          <div class="flex flex-row items-center">
-            <Task :todo="todo" :refresh="refresh" />
-            <i
-              @click="handleAddTodoToGroup(todo._id.toString())"
-              class="pi pi-plus-circle ml-4 hover:cursor-pointer"
-            ></i>
-          </div>
-        </li>
-      </ul>
-    </div>
+      </li>
+    </ul>
   </div>
 </template>
