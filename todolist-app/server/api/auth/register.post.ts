@@ -1,4 +1,5 @@
 import bcryptjs from "bcryptjs";
+import { MongooseError } from "mongoose";
 import { User } from "~/server/models/User";
 
 export default defineEventHandler(async (event) => {

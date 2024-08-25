@@ -44,10 +44,8 @@ export default defineEventHandler(async (event) => {
     event.node.res.statusCode = 200;
     return {
       statusMessage: "Login success",
-      data: {
-        access_token,
-        userId: user._id,
-      },
+      access_token,
+      userId: user._id,
     };
   } catch (error) {
     console.log(error);

@@ -2,6 +2,30 @@
 definePageMeta({
   layout: "custom",
 });
+
+import { ref } from "vue";
+
+const email = ref("");
+const password = ref("");
+
+const handleLogin = async () => {
+  try {
+    const { data } = await useFetch("/api/auth/login", {
+      method: "POST",
+      body: {
+        email: email.value,
+        password: password.value,
+      },
+    });
+    if (data.value && "access_token" in data.value) {
+      const cookieStore = useCookie("token");
+      cookieStore.value = data.value.access_token;
+      navigateTo("/add-task");
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
 </script>
 
 <template>
@@ -10,11 +34,12 @@ definePageMeta({
   >
     <div class="w-[400px] rounded-2xl bg-white p-8 shadow">
       <h2 class="text-sub2 text-center text-2xl font-bold">Sign in</h2>
-      <form class="mt-8 space-y-4">
+      <form class="mt-8 space-y-4" @submit.prevent="handleLogin">
         <div>
           <label class="text-sub2 mb-2 block text-sm">Email</label>
           <div class="relative flex items-center">
             <input
+              v-model="email"
               name="email"
               type="text"
               required
@@ -28,6 +53,7 @@ definePageMeta({
           <label class="text-sub2 mb-2 block text-sm">Password</label>
           <div class="relative flex items-center">
             <input
+              v-model="password"
               name="password"
               type="password"
               required
@@ -39,7 +65,7 @@ definePageMeta({
 
         <div class="!mt-8">
           <button
-            type="button"
+            type="submit"
             class="bg-sub w-full rounded-lg px-4 py-3 text-sm tracking-wide text-white hover:bg-primary hover:font-semibold hover:text-gray-500 focus:outline-none"
           >
             Sign in
