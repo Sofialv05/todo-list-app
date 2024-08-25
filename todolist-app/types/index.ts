@@ -3,6 +3,7 @@ import type { Types } from "mongoose";
 interface Base {
   _id: Types.ObjectId;
   name: string;
+  userId: Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -24,4 +25,12 @@ export interface Groups extends Base {
 
 export interface APIResponse {
   statusMessage: string;
+}
+
+export interface IUser {
+  _id: Types.ObjectId;
+  email: string;
+  password: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
