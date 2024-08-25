@@ -1,14 +1,28 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useGroupStore } from "@/stores/group";
+import type { ITodo } from "~/types";
 
 const groupStore = useGroupStore();
 
 const newGroup = ref("");
 
-const { pending, error, refresh, data } = await useAsyncData("groups", () =>
+const { pending, error, refresh } = await useAsyncData("groups", () =>
   groupStore.getGroups(),
 );
+
+const taskProgress = (group: any) => {
+  const totalTasks = group.todos.length;
+  if (!totalTasks) {
+    return { completedTask: "No task yet", progress: "0%" };
+  }
+  const completedTasks = group.todos.filter(
+    (task: ITodo) => task.completed,
+  ).length;
+  const result = Math.round((completedTasks / totalTasks) * 100) + "%";
+
+  return { completedTask: result, progress: result };
+};
 
 const addGroup = async () => {
   if (newGroup.value.trim()) {
@@ -53,7 +67,7 @@ const handleDeleteGrop = async (id: string) => {
     <div v-if="pending" class="flex h-full w-full">
       <Spinner />
     </div>
-    <div v-if="error">Error: {{ error.message }}</div>
+    <div v-else-if="error">Error: {{ error.message }}</div>
     <div
       v-else
       v-for="group of groupStore.groups"
@@ -61,23 +75,29 @@ const handleDeleteGrop = async (id: string) => {
     >
       <div class="card w-full border-2 shadow-md">
         <div class="card-body">
-          <h2 class="card-title text-gray-600">{{ group.name }}</h2>
-
-          <div class="card-actions flex justify-end">
-            <RouterLink
-              :to="`/groups/${group._id}`"
-              class="hover:bg-sub y flex-shrink-0 rounded bg-primary px-4 py-2 text-sm text-gray-700 hover:text-white"
-            >
-              See all tasks
-            </RouterLink>
-            <button
-              class="flex-shrink-0 rounded bg-red-500 px-4 py-2 text-sm text-white hover:bg-red-600 hover:text-white"
-            >
-              <i
-                @click="handleDeleteGrop(group._id.toString())"
-                class="pi pi-trash hover:cursor-pointer"
-              ></i>
-            </button>
+          <div class="flex flex-col gap-5">
+            <h2 class="card-title text-gray-600">{{ group.name }}</h2>
+            <div class="flex flex-row justify-between gap-10">
+              <div class="w-3/4">
+                <ProgressBar :progress="taskProgress(group)" />
+              </div>
+              <div class="flex flex-wrap items-center gap-2">
+                <RouterLink
+                  :to="`/groups/${group._id}`"
+                  class="hover:bg-sub y flex-shrink-0 rounded bg-primary px-4 py-2 text-sm text-gray-700 hover:text-white"
+                >
+                  See all tasks
+                </RouterLink>
+                <button
+                  class="flex-shrink-0 rounded bg-red-500 px-4 py-2 text-sm text-white hover:bg-red-600 hover:text-white"
+                >
+                  <i
+                    @click="handleDeleteGrop(group._id.toString())"
+                    class="pi pi-trash hover:cursor-pointer"
+                  ></i>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
