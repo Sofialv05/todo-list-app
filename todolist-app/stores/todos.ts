@@ -20,7 +20,7 @@ export const useTodosStore = defineStore("todos", {
         const response = await $fetch<APIResponseWithData>(baseUrl);
 
         this.todos = response.data;
-        console.log(response);
+        // console.log(response);
         return response.statusMessage;
       } catch (error) {
         console.error(error);
@@ -56,8 +56,8 @@ export const useTodosStore = defineStore("todos", {
       updatedTodo: {
         name: string;
         content: string;
-        dueDate: string;
-        priority: number;
+        dueDate: Date;
+        priority: string;
       },
       todoId: string,
     ) {

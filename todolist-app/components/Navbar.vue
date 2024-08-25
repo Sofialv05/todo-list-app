@@ -1,16 +1,8 @@
 <template>
-  <div
-    class="flex h-16 items-center justify-between border-b border-gray-200 bg-white py-4"
-  >
+  <div class="flex h-16 items-center border-b border-gray-200 bg-white py-4">
     <HamburgerButton />
-    <div class="flex w-full items-center justify-center px-4">
-      <input
-        class="mx-4 w-auto rounded-md border px-4 py-2"
-        type="text"
-        placeholder="Search"
-      />
-    </div>
-    <div class="flex items-center pr-4">
+
+    <div class="ml-auto pr-4">
       <button
         class="flex items-center text-gray-500 hover:text-gray-700 focus:text-gray-700 focus:outline-none"
       >

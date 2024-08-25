@@ -24,7 +24,7 @@ export const useGroupStore = defineStore("group", {
     async getGroupTodos(id: string) {
       try {
         const response = await $fetch<APIResponseWithData>(`/api/group/${id}`);
-        console.log(response.data);
+        // console.log(response.data);
         this.group = response.data[0];
         return response.statusMessage;
       } catch (error) {

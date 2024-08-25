@@ -35,7 +35,7 @@ const handleSearch = async () => {
         </h1>
       </div>
       <form
-        class="mx-auto mt-4 flex w-full flex-row items-center justify-center"
+        class="mx-40 mt-4 flex flex-row items-center justify-center"
         @submit.prevent="handleSearch"
       >
         <div class="mr-3 w-full">

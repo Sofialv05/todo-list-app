@@ -9,7 +9,17 @@ module.exports = {
     "./error.vue",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: "#e2eff1",
+        sub: "#b6d5e1",
+        sub2: "#65799b",
+      },
+      fontFamily: {
+        poppins: ["Poppins", "sans-serif"],
+        montserrat: ["Montserrat", "sans-serif"],
+      },
+    },
   },
   plugins: [require("daisyui")],
   daisyui: {

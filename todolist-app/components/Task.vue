@@ -4,6 +4,8 @@ import { useTodosStore } from "~/stores/todos";
 import type { ITodo } from "~/types";
 import { ref, computed } from "vue";
 
+type ITodoWithoutId = Omit<ITodo, "_id">;
+
 const props = defineProps<{
   todo: ITodo;
   refresh: () => Promise<void>;
@@ -12,7 +14,10 @@ const props = defineProps<{
 const isShowContent = ref(false);
 const isCompleted = ref(props.todo.completed);
 const editingField = ref<"name" | "content" | "date" | "">("");
-const todoRef = ref({ ...props.todo });
+const todoRef = ref<ITodoWithoutId>({
+  ...props.todo,
+  _id: undefined,
+} as ITodoWithoutId);
 
 const globalStore = useGlobalStore();
 const todoStore = useTodosStore();
@@ -26,13 +31,13 @@ const toggleShowContent = () => {
 };
 
 const toggleCheckbox = async () => {
-  await todoStore.changeTodoStatus(props.todo._id);
+  await todoStore.changeTodoStatus(props.todo._id.toString());
   isCompleted.value = !isCompleted.value;
 };
 
 const handleSubmitEdit = async () => {
   try {
-    await todoStore.updateTodo(todoRef.value, props.todo._id);
+    await todoStore.updateTodo(todoRef.value, props.todo._id.toString());
     editingField.value = "";
     await props.refresh();
   } catch (error) {
@@ -41,13 +46,13 @@ const handleSubmitEdit = async () => {
 };
 
 const handleDelete = async () => {
-  await todoStore.deleteTodo(props.todo._id);
+  await todoStore.deleteTodo(props.todo._id.toString());
   await props.refresh();
 };
 
 const handlePriority = async (priority: string) => {
   todoRef.value.priority = priority;
-  await todoStore.updateTodo(todoRef.value, props.todo._id);
+  await todoStore.updateTodo(todoRef.value, props.todo._id.toString());
 };
 
 const colors = [
@@ -69,7 +74,7 @@ const flagPriority = computed(() => {
 </script>
 
 <template>
-  <div class="flex w-full flex-col">
+  <div class="flex w-full flex-col text-gray-500">
     <div class="flex w-full flex-row items-center justify-between">
       <i
         @click="toggleShowContent"
@@ -94,7 +99,7 @@ const flagPriority = computed(() => {
         <span
           v-if="editingField !== 'name'"
           @dblclick="toggleEdit('name')"
-          class="text-md font-semibold"
+          class="text-md ml-2 font-semibold"
         >
           {{ props.todo.name }}
         </span>
@@ -114,7 +119,9 @@ const flagPriority = computed(() => {
           class="text-md"
         >
           {{
-            props.todo.dueDate ? globalStore.formatDate(props.todo.dueDate) : ""
+            props.todo.dueDate
+              ? globalStore.formatDate(props.todo.dueDate.toString())
+              : ""
           }}
         </p>
         <input
@@ -161,14 +168,14 @@ const flagPriority = computed(() => {
         v-if="editingField !== 'content'"
         :class="{ 'text-gray-500': !props.todo.content }"
         @dblclick="toggleEdit('content')"
-        class="ml-12 text-sm"
+        class="ml-14 text-sm"
       >
         {{ props.todo.content || "add content here" }}
       </p>
       <textarea
         v-else
         type="text"
-        class="ml-12 w-[90%] text-sm focus:outline-none"
+        class="ml-14 w-[85%] text-sm focus:outline-none"
         v-model="todoRef.content"
         @blur="handleSubmitEdit"
         @keyup.enter="handleSubmitEdit"
