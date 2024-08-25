@@ -33,6 +33,7 @@ const toggleShowContent = () => {
 const toggleCheckbox = async () => {
   await todoStore.changeTodoStatus(props.todo._id.toString());
   isCompleted.value = !isCompleted.value;
+  await props.refresh();
 };
 
 const handleSubmitEdit = async () => {

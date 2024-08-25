@@ -8,7 +8,7 @@ const todoStore = useTodosStore();
 const allTodos = ref<ITodo[]>([]);
 const searchRef = ref("");
 
-const { pending, error, refresh, data } = await useAsyncData("todos", () =>
+const { pending, error, refresh } = await useAsyncData("todos", () =>
   todoStore.getTodos(),
 );
 onMounted(() => {
@@ -19,15 +19,14 @@ onMounted(() => {
 const handleSearch = async () => {
   await todoStore.getTodos(false, searchRef.value);
   allTodos.value = todoStore.todos;
-  console.log(allTodos.value);
 };
 </script>
 <template>
   <div class="p-4">
-    <h1 class="text-sub2 text-center text-2xl font-bold">All Task</h1>
+    <h1 class="text-sub2 text-center text-2xl font-bold">All Tasks</h1>
   </div>
   <form
-    class="mx-40 mt-4 flex flex-row items-center justify-center"
+    class="mx-4 mt-4 flex flex-row items-center justify-center lg:mx-40"
     @submit.prevent="handleSearch"
   >
     <div class="mr-3 w-full">
@@ -59,7 +58,7 @@ const handleSearch = async () => {
     </button>
   </form>
   <div class="mt-4 flex flex-grow overflow-y-auto">
-    <ul class="m-8 w-full divide-y divide-gray-200 px-4">
+    <ul class="w-full divide-y divide-gray-200 px-4 lg:m-8">
       <div v-if="pending" class="flex h-full w-full">
         <Spinner />
       </div>

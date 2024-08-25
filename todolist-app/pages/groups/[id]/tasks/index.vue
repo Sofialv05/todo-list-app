@@ -44,7 +44,7 @@ const handleAddTodoToGroup = async (todoId: string) => {
   <div class="relative flex flex-row items-center p-4">
     <RouterLink
       :to="`/groups/${groupId}`"
-      class="hover:bg-sub y absolute left-4 flex-shrink-0 rounded bg-primary px-4 py-2 text-sm text-gray-700 hover:text-white"
+      class="hover:bg-sub y absolute left-4 hidden flex-shrink-0 rounded bg-primary px-4 py-2 text-sm text-gray-700 hover:text-white lg:inline"
     >
       <i class="pi pi-angle-left"></i>
       Back to {{ groupStore.group.name }}
@@ -54,7 +54,7 @@ const handleAddTodoToGroup = async (todoId: string) => {
     </h1>
   </div>
   <div class="mt-4 flex flex-grow overflow-y-auto">
-    <ul class="m-8 w-full divide-y divide-gray-200 px-4">
+    <ul class="w-full divide-y divide-gray-200 px-4 lg:m-8">
       <div v-if="filteredTodos.length < 1">
         <h1 class="text-center text-lg text-gray-800">No tasks available</h1>
       </div>

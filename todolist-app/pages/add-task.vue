@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useTodosStore } from "@/stores/todos";
+
 const todoStore = useTodosStore();
 
 const newTodo = ref("");
@@ -10,10 +11,6 @@ const { pending, error, refresh, data } = await useAsyncData("todos", () =>
 onMounted(() => {
   todoStore.getTodos(true);
 });
-
-// onBeforeMount(() => {
-//   todoStore.getTodos();
-// });
 
 const addTodo = async () => {
   if (newTodo.value.trim()) {
@@ -48,7 +45,7 @@ const addTodo = async () => {
     </div>
   </form>
   <div class="mt-4 flex flex-grow overflow-y-auto">
-    <ul class="m-8 w-full divide-y divide-gray-200 px-4">
+    <ul class="w-full divide-y divide-gray-200 px-4 lg:m-8">
       <div v-if="pending" class="flex h-full w-full">
         <Spinner />
       </div>

@@ -77,14 +77,14 @@ const handleDeleteGrop = async (id: string) => {
         <div class="card-body">
           <div class="flex flex-col gap-5">
             <h2 class="card-title text-gray-600">{{ group.name }}</h2>
-            <div class="flex flex-row justify-between gap-10">
-              <div class="w-3/4">
+            <div class="flex flex-col justify-between gap-10 lg:flex-row">
+              <div class="lg:w-3/4">
                 <ProgressBar :progress="taskProgress(group)" />
               </div>
-              <div class="flex flex-wrap items-center gap-2">
+              <div class="flex flex-wrap items-center gap-2 self-end">
                 <RouterLink
                   :to="`/groups/${group._id}`"
-                  class="hover:bg-sub y flex-shrink-0 rounded bg-primary px-4 py-2 text-sm text-gray-700 hover:text-white"
+                  class="hover:bg-sub flex-shrink-0 rounded bg-primary px-4 py-2 text-sm text-gray-700 hover:text-white"
                 >
                   See all tasks
                 </RouterLink>
