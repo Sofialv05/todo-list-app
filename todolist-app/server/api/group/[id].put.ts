@@ -5,10 +5,10 @@ export default defineEventHandler(async (event) => {
   const id = event.context.params!.id;
   try {
     if (!body.name) {
-      return {
+      throw createError({
         statusCode: 400,
         statusMessage: "Group name is required.",
-      };
+      });
     }
     await Group.findByIdAndUpdate({ _id: id }, { name: body.name });
     event.node.res.statusCode = 200;

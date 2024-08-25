@@ -6,10 +6,10 @@ export default defineEventHandler(async (event) => {
   try {
     const todo = await Todo.findById({ _id: new ObjectId(id) });
     if (!todo) {
-      return {
+      throw createError({
         statusCode: 404,
         statusMessage: "Todo not found.",
-      };
+      });
     }
     await Todo.findByIdAndUpdate(
       { _id: new ObjectId(id) },

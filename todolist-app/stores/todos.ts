@@ -27,11 +27,16 @@ export const useTodosStore = defineStore("todos", {
         return "Failed to fetch data";
       }
     },
-    async getImportantTodos() {
+    async getImportantTodos(show = "upcoming") {
       try {
-        const response = await $fetch<APIResponseWithData>(
-          "/api/todos/important",
-        );
+        let baseUrl = "/api/todos/important";
+        if (show == "upcoming") {
+          baseUrl += "?show=upcoming";
+        } else if (show == "passed") {
+          baseUrl += "?show=passed";
+        }
+
+        const response = await $fetch<APIResponseWithData>(baseUrl);
         this.todos = response.data;
         console.log(response);
         return response.statusMessage;

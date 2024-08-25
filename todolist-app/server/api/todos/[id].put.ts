@@ -9,10 +9,10 @@ export default defineEventHandler(async (event) => {
   } = await readBody(event);
   try {
     if (!body.name) {
-      return {
+      throw createError({
         statusCode: 400,
         statusMessage: "Todo name is required.",
-      };
+      });
     }
     await Todo.findByIdAndUpdate(
       { _id: event.context.params!.id },

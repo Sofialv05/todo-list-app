@@ -6,32 +6,32 @@ export default defineEventHandler(async (event) => {
   const groupId = event.context.params!.id;
   try {
     if (!groupId) {
-      return {
+      throw createError({
         statusCode: 400,
         statusMessage: "Group id is required.",
-      };
+      });
     }
     if (!body.id) {
-      return {
+      throw createError({
         statusCode: 400,
         statusMessage: "Todo id is required.",
-      };
+      });
     }
 
     const group = await Group.findById({ _id: groupId });
 
     if (!group) {
-      return {
+      throw createError({
         statusCode: 404,
         statusMessage: "Group not found.",
-      };
+      });
     }
 
     if (group.todos.includes(body.id)) {
-      return {
+      throw createError({
         statusCode: 400,
         statusMessage: "Todo already exists in the group",
-      };
+      });
     }
     await Group.findByIdAndUpdate(
       { _id: groupId },

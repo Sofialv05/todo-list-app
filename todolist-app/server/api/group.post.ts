@@ -4,10 +4,10 @@ export default defineEventHandler(async (event) => {
   const body: { name: string } = await readBody(event);
   try {
     if (!body.name) {
-      return {
+      throw createError({
         statusCode: 400,
         statusMessage: "Group name is required.",
-      };
+      });
     }
 
     await Group.create({ name: body.name });
