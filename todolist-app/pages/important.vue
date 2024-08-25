@@ -1,11 +1,18 @@
 <script setup lang="ts">
 import { useTodosStore } from "@/stores/todos";
-const todoStore = useTodosStore();
+import type { ITodo } from "~/types";
 
-const { pending, error, refresh, data } = await useAsyncData(
-  "importantTodos",
-  () => todoStore.getImportantTodos(),
+const todoStore = useTodosStore();
+const importantTodos = ref<ITodo[]>([]);
+
+const { pending, error, refresh } = await useAsyncData("importantTodos", () =>
+  todoStore.getImportantTodos(),
 );
+
+onMounted(async () => {
+  await todoStore.getImportantTodos();
+  importantTodos.value = todoStore.todos;
+});
 </script>
 
 <template>
@@ -18,10 +25,10 @@ const { pending, error, refresh, data } = await useAsyncData(
       <div v-if="pending" class="flex h-full w-full">
         <Spinner />
       </div>
-      <div v-if="error">Error: {{ error.message }}</div>
+      <div v-else-if="error">Error: {{ error.message }}</div>
       <li
         v-else
-        v-for="todo of todoStore.todos"
+        v-for="todo of importantTodos"
         :key="todo._id.toString()"
         class="py-4"
       >

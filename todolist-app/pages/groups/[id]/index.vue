@@ -37,7 +37,7 @@ const { pending, error, refresh } = await useAsyncData("groupTodos", () =>
       <div v-if="pending" class="flex h-full w-full">
         <Spinner />
       </div>
-      <div v-if="error">Error: {{ error.message }}</div>
+      <div v-else-if="error">Error: {{ error.message }}</div>
       <li
         v-else
         v-for="todo of groupStore.group.todos"
