@@ -24,7 +24,7 @@ export const useGroupStore = defineStore("group", {
     async getGroupTodos(id: string) {
       try {
         const response = await $fetch<APIResponseWithData>(`/api/group/${id}`);
-        // console.log(response.data);
+
         this.group = response.data[0];
         return response.statusMessage;
       } catch (error) {
@@ -37,7 +37,6 @@ export const useGroupStore = defineStore("group", {
           method: "POST",
           body: JSON.stringify({ name: groupName }),
         });
-        console.log(response);
       } catch (error) {
         console.error(error);
       }
@@ -48,7 +47,6 @@ export const useGroupStore = defineStore("group", {
           method: "PUT",
           body: JSON.stringify({ name: updatedGroup }),
         });
-        console.log(response);
       } catch (error) {
         console.error(error);
       }
@@ -59,7 +57,6 @@ export const useGroupStore = defineStore("group", {
           method: "PATCH",
           body: JSON.stringify({ id: todoId }),
         });
-        console.log(response);
       } catch (error) {
         console.error(error);
       }
@@ -69,7 +66,6 @@ export const useGroupStore = defineStore("group", {
         const response = await $fetch<APIResponse>(`/api/group/${groupId}`, {
           method: "DELETE",
         });
-        console.log(response);
       } catch (error) {
         console.error(error);
       }

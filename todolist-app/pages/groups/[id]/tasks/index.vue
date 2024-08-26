@@ -20,11 +20,9 @@ const { pending, error, refresh, data } = await useAsyncData("todos", () =>
 const mountedFn = async () => {
   await groupStore.getGroupTodos(groupId);
   groupTodos.value = groupStore.group.todos;
-  // console.log(groupTodos.value);
   const filterTodos = todoStore.todos.filter((todo) => {
     return !groupTodos.value.some((groupTodo) => groupTodo._id === todo._id);
   });
-  // console.log(filterTodos);
 
   filteredTodos.value = filterTodos;
 };
@@ -44,12 +42,12 @@ const handleAddTodoToGroup = async (todoId: string) => {
   <div class="relative flex flex-row items-center p-4">
     <RouterLink
       :to="`/groups/${groupId}`"
-      class="hover:bg-sub y absolute left-4 hidden flex-shrink-0 rounded bg-primary px-4 py-2 text-sm text-gray-700 hover:text-white lg:inline"
+      class="y absolute left-4 hidden flex-shrink-0 rounded bg-primary px-4 py-2 text-sm text-gray-700 hover:bg-sub hover:text-white lg:inline"
     >
       <i class="pi pi-angle-left"></i>
       Back to {{ groupStore.group.name }}
     </RouterLink>
-    <h1 class="text-sub2 flex-grow text-center text-2xl font-bold">
+    <h1 class="flex-grow text-center text-2xl font-bold text-sub2">
       Add task to {{ groupStore.group.name }}
     </h1>
   </div>

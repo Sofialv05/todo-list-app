@@ -1,4 +1,4 @@
-import { Todo } from "../models/Todo";
+import { Todo } from "../../models/Todo";
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event);

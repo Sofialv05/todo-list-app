@@ -1,4 +1,4 @@
-import { Group } from "../models/Group";
+import { Group } from "../../models/Group";
 
 export default defineEventHandler(async (event) => {
   const body: { name: string } = await readBody(event);
