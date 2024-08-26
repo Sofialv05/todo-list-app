@@ -1,5 +1,7 @@
 # My Task App
 
+For the documentation and how to run the project: [My Task App](./docs.md)
+
 ## Software Engineer Technical Test
 
 ## Why Google Tasks?
@@ -46,7 +48,3 @@ One of the primary reasons why I chose Google Tasks is its remarkably intuitive 
 #### 2. Search task
 
 **Reason:** A search functionality is essential for quickly locating specific tasks, especially as the task list grows. Without this feature, users may struggle to find tasks in a long list, leading to frustration and inefficiency. The ability to search tasks by keywords or tags would significantly improve the user experience.
-
-## My Task App
-
-For the documentation and how to run the project: [My Task App](./docs.md)
