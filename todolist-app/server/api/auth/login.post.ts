@@ -36,10 +36,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    const access_token = jwt.sign(
-      { _id: user._id, email: user.email },
-      "secret",
-    );
+    const access_token = jwt.sign({ userId: user._id }, "secret");
 
     event.node.res.statusCode = 200;
     return {

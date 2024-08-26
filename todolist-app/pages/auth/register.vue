@@ -1,6 +1,7 @@
 <script setup lang="ts">
 definePageMeta({
   layout: "custom",
+  middleware: "guest",
 });
 
 import { ref } from "vue";

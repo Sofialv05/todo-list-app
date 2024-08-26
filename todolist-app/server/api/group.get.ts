@@ -3,6 +3,11 @@ import { Group } from "../models/Group";
 
 export default defineEventHandler(async (event) => {
   try {
+    const userId = event.context.userId;
+    console.log(userId);
+    if (!userId) {
+      throw createError({ statusCode: 401, statusMessage: "Unauthorized" });
+    }
     const groups = await Group.aggregate<Groups>([
       {
         $lookup: {

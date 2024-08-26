@@ -34,3 +34,5 @@ export interface IUser {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export type UserWithoutPassword = Omit<IUser, "password">;
