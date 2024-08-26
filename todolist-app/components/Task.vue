@@ -3,6 +3,7 @@ import { useGlobalStore } from "~/stores/global";
 import { useTodosStore } from "~/stores/todos";
 import type { ITodo } from "~/types";
 import { ref, computed } from "vue";
+import Swal from "sweetalert2";
 
 type ITodoWithoutId = Omit<ITodo, "_id">;
 
@@ -47,8 +48,25 @@ const handleSubmitEdit = async () => {
 };
 
 const handleDelete = async () => {
-  await todoStore.deleteTodo(props.todo._id.toString());
-  await props.refresh();
+  const result = await Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#b6d5e1",
+    confirmButtonText: "Yes, delete it!",
+  });
+
+  if (result.isConfirmed) {
+    await todoStore.deleteTodo(props.todo._id.toString());
+    Swal.fire({
+      title: "Deleted!",
+      text: "Your file has been deleted.",
+      icon: "success",
+    });
+    await props.refresh();
+  }
 };
 
 const handlePriority = async (priority: string) => {

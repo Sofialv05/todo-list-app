@@ -1,3 +1,13 @@
+# My Task App
+
+## Features
+
+- Create, read, update and delete Task
+- Task content
+- Task priority
+- Task group/lists
+- Search task
+
 # How to Run The Project Locally
 
 ## Prerequisites
