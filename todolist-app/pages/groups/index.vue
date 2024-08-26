@@ -1,4 +1,7 @@
 <script setup lang="ts">
+definePageMeta({
+  middleware: "auth",
+});
 import { ref, onMounted } from "vue";
 import { useGroupStore } from "@/stores/group";
 import type { ITodo } from "~/types";
@@ -82,12 +85,12 @@ const handleDeleteGrop = async (id: string) => {
                 <ProgressBar :progress="taskProgress(group)" />
               </div>
               <div class="flex flex-wrap items-center gap-2 self-end">
-                <RouterLink
+                <NuxtLink
                   :to="`/groups/${group._id}`"
                   class="hover:bg-sub flex-shrink-0 rounded bg-primary px-4 py-2 text-sm text-gray-700 hover:text-white"
                 >
                   See all tasks
-                </RouterLink>
+                </NuxtLink>
                 <button
                   class="flex-shrink-0 rounded bg-red-500 px-4 py-2 text-sm text-white hover:bg-red-600 hover:text-white"
                 >

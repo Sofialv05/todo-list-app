@@ -1,4 +1,7 @@
 <script setup lang="ts">
+definePageMeta({
+  middleware: "auth",
+});
 import { useTodosStore } from "@/stores/todos";
 
 const todoStore = useTodosStore();

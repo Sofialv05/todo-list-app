@@ -1,4 +1,4 @@
-# Wisata App
+# My Task App
 
 ## Software Engineer Technical Test
 

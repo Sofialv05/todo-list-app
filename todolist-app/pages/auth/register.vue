@@ -84,10 +84,10 @@ const handleRegister = async () => {
         </div>
         <p class="text-sub2 !mt-8 text-center text-sm">
           Already have an account?
-          <RouterLink
+          <NuxtLink
             to="/auth/login"
             class="text-sub ml-1 whitespace-nowrap font-semibold hover:underline"
-            >Login</RouterLink
+            >Login</NuxtLink
           >
         </p>
       </form>

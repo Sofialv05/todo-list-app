@@ -20,7 +20,7 @@ definePageMeta({
         top of everything that matters.
       </p>
       <div class="mt-10">
-        <NuxtLink to="/add-task" class="bg-sub2 btn text-white">
+        <NuxtLink to="/auth/login" class="bg-sub2 btn text-white">
           Get started
         </NuxtLink>
       </div>

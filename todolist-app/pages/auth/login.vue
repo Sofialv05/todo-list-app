@@ -73,10 +73,10 @@ const handleLogin = async () => {
         </div>
         <p class="text-sub2 !mt-8 text-center text-sm">
           Don't have an account?
-          <RouterLink
+          <NuxtLink
             to="/auth/register"
             class="text-sub ml-1 whitespace-nowrap font-semibold hover:underline"
-            >Register here</RouterLink
+            >Register here</NuxtLink
           >
         </p>
       </form>

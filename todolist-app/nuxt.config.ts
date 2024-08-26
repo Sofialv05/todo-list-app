@@ -5,6 +5,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   runtimeConfig: {
     MONGODB_URI: process.env.MONGODB_URI,
+    JWT_SECRET: process.env.JWT_SECRET,
   },
   css: ["~/assets/css/main.css", "primeicons/primeicons.css"],
   postcss: {

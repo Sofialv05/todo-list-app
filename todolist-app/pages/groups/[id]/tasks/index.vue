@@ -1,4 +1,7 @@
 <script setup lang="ts">
+definePageMeta({
+  middleware: "auth",
+});
 import { ref, onMounted, onBeforeMount } from "vue";
 import { useRoute } from "vue-router";
 import { useGroupStore } from "@/stores/group";
@@ -42,13 +45,13 @@ const handleAddTodoToGroup = async (todoId: string) => {
 
 <template>
   <div class="relative flex flex-row items-center p-4">
-    <RouterLink
+    <NuxtLink
       :to="`/groups/${groupId}`"
       class="hover:bg-sub y absolute left-4 hidden flex-shrink-0 rounded bg-primary px-4 py-2 text-sm text-gray-700 hover:text-white lg:inline"
     >
       <i class="pi pi-angle-left"></i>
       Back to {{ groupStore.group.name }}
-    </RouterLink>
+    </NuxtLink>
     <h1 class="text-sub2 flex-grow text-center text-2xl font-bold">
       Add task to {{ groupStore.group.name }}
     </h1>
