@@ -4,8 +4,9 @@ import { useTodosStore } from "@/stores/todos";
 const todoStore = useTodosStore();
 const showOption = ref("upcoming");
 
-const { pending, error, refresh } = await useAsyncData("importantTodos", () =>
-  todoStore.getImportantTodos(showOption.value),
+const { pending, error, refresh, data } = await useAsyncData(
+  "importantTodos",
+  () => todoStore.getImportantTodos(showOption.value),
 );
 
 onMounted(async () => {
@@ -19,7 +20,7 @@ const handleShowChange = async () => {
 
 <template>
   <div class="p-4">
-    <h1 class="text-sub2 text-center text-2xl font-bold">Important Tasks</h1>
+    <h1 class="text-center text-2xl font-bold text-sub2">Important Tasks</h1>
   </div>
   <div class="self-center lg:mr-12 lg:self-end">
     <select
