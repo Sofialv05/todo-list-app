@@ -2,8 +2,6 @@
 
 For the documentation and how to run the project: [My Task App](./docs.md)
 
-## Software Engineer Technical Test
-
 ## Why Google Tasks?
 
 When it comes to selecting the ideal todo list app, there are countless options available, each promising to enhance productivity and streamline task management. After experimenting with numerous highly recommended apps, I ultimately decided on Google Tasks, a choice driven by both personal experience and the app’s
